@@ -5,44 +5,60 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //cargar palabras hasta que yo escriba exit y que muestre cuantas palabras iguales hay en el array
-        Scanner sc = new Scanner(System.in);
-        ArrayList<String> words = new ArrayList<>();
-        ArrayList<String> noRepeatWords = new ArrayList<>();
-        ArrayList<Integer> quantity = new ArrayList<>();
-        String word;
-        do {
-            System.out.print("Cargue una palabra o ingrese exit para detener la carga: ");
-            word = sc.next();
-            if (!word.equals("exit")) {
-                words.add(word);
-            }else {
-                System.out.println("Sus palabras son: " + words);
-            }
-        } while (!word.equals("exit"));
 
-        for (int i = 0; i < words.size(); i++) {
-            String auxPalabra = words.get(i);
-            boolean isInArray = false;
-            for (int j = 0; j < words.size(); j++) {
-                if (auxPalabra.equals(words.get(j)) && i != j) {
-                    isInArray = true;
-                    break;
-                }
+        //Escribir un programa que me permita escribir palabras hasta que escriba exit y que me muestre cuantas apariciones de cada palabra encuentra
+        //
+        //USAR ArrayList
+
+        //definicion e inicializacion
+        Scanner sc = new Scanner(System.in);
+        ArrayList<String> words = new ArrayList<String>();
+        String word;
+        String temp;
+        boolean primeraVez = true;
+        boolean ultimaVez = false;
+        int contador = 0;
+
+        //carga de datos
+        do{
+            System.out.print("Ingrese una palabra a cargar o exit para salir: ");
+            word = sc.next();
+            if(!word.equalsIgnoreCase("exit")){
+
+                words.add(word);
             }
-            if (!isInArray){
-                noRepeatWords.add(auxPalabra);
-                quantity.add(1);
-            }else {
-                for(int k = 0; k < noRepeatWords.size(); k++){
-                    if(auxPalabra.equals(noRepeatWords.get(k))){
-                        int cant = quantity.get(k) + 1;
-                        quantity.set(k, cant);
-                    }
+        }while (!word.equalsIgnoreCase("exit"));
+
+        System.out.println(words);
+
+        //ordenar array
+        for (int j = 0; j < words.size(); j++) {
+            for (int i = j + 1; i < words.size(); i++) {
+                if (words.get(i).compareTo(words.get(j)) < 0) {
+                    temp = words.get(j);
+                    words.set(j, words.get(i));
+                    words.set(i, temp);
                 }
             }
         }
-        System.out.println(noRepeatWords);
-        System.out.println(quantity);
+        System.out.println(words);
+
+        //mostrar cantidad de veces
+        for (int i = 0; i < words.size(); i++) {
+            if (i == words.size() - 1){
+                ultimaVez = true;
+            }
+            if (primeraVez & !ultimaVez){
+                primeraVez = false;
+                contador++;
+            } else {
+                if (words.get(i).equals(words.get(i - 1))) {
+                    contador++;
+                } else {
+                    System.out.println("Se encontro " + contador + " vez/veces la palabra " + words.get(i - 1));
+                    contador = 1;
+                }
+            }
+        }
     }
 }
