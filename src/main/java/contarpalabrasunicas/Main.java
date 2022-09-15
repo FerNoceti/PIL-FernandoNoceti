@@ -1,4 +1,4 @@
-package pil;
+package contarpalabrasunicas;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -48,8 +48,7 @@ public class Main {
             if (i == words.size() - 1){
                 ultimaVez = true;
             }
-            if (primeraVez & !ultimaVez){
-                primeraVez = false;
+            if (i == 0 & !ultimaVez){
                 contador++;
             } else {
                 if (words.get(i).equals(words.get(i - 1))) {
